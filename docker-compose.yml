@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: botones_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: botones_db
+    ports:
+      - "6432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: botones_backend
+    ports:
+      - "5050:5050"
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=db
+      - DB_NAME=botones_db
+      - PORT=5050
+    depends_on:
+      - db
+
+  frontend:
+    build: .
+    container_name: botones_frontend
+    ports:
+      - "9090:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
