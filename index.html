@@ -17,6 +17,17 @@
 
 <body>
   <div id="root"></div>
+
+  <!-- Formulario oculto para que Netlify detecte los campos en el build -->
+  <form name="solicitud-boton" data-netlify="true" hidden>
+    <input type="text" name="nombre" />
+    <input type="text" name="apellido" />
+    <input type="text" name="cedula" />
+    <input type="email" name="email" />
+    <input type="tel" name="telefono" />
+    <textarea name="descripcion"></textarea>
+  </form>
+
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
