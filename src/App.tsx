@@ -145,7 +145,7 @@ function App() {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setFormStatus('submitting');
-    
+
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData);
 
@@ -169,9 +169,8 @@ function App() {
           <span>CALLE NORTE, ENTRA AV. MANAURE Y CALLE TOLEDO | LUNES A VIERNES 8:00 AM - 12:00 PM</span>
         </div>
         <div className="social-icons">
-          <a href="#"><i className="fab fa-instagram"></i></a>
-          <a href="#"><i className="fab fa-facebook-f"></i></a>
-          <a href="#"><i className="fab fa-twitter"></i></a>
+          <a href="https://www.instagram.com/unefmoficial/" target='_blank'><i className="fab fa-instagram"></i></a>
+          <a href="https://x.com/DidaUNEFMofici1" target='_blank'><i className="fab fa-twitter"></i></a>
         </div>
       </div>
 
@@ -267,11 +266,11 @@ function App() {
                   <>
                     <p className="subtitle">Si considera que debería estar en la lista, complete este formulario.</p>
 
-                    <form 
-                      name="solicitud-boton" 
-                      method="POST" 
+                    <form
+                      name="solicitud-boton"
+                      method="POST"
                       data-netlify="true"
-                      onSubmit={handleFormSubmit} 
+                      onSubmit={handleFormSubmit}
                       className="space-y-4 text-left"
                     >
                       <input type="hidden" name="form-name" value="solicitud-boton" />
