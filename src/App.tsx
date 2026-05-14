@@ -22,6 +22,18 @@ function App() {
   const [searching, setSearching] = useState(false);
   const [error, setError] = useState('');
   const [view, setView] = useState<'search' | 'form'>('search');
+  const [censusStatus, setCensusStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  useEffect(() => {
+    if (result) {
+      const confirmed = localStorage.getItem(`confirmed_${result.cedula}`);
+      if (confirmed) {
+        setCensusStatus('success');
+      } else {
+        setCensusStatus('idle');
+      }
+    }
+  }, [result]);
 
   useEffect(() => {
     const loadExcel = async () => {
@@ -115,6 +127,7 @@ function App() {
     setSearching(true);
     setResult(null);
     setError('');
+    setCensusStatus('idle');
 
     setTimeout(() => {
       const cleanSearch = searchTerm.replace(/\D/g, '');
@@ -159,6 +172,29 @@ function App() {
     } catch (err) {
       console.error(err);
       setFormStatus('error');
+    }
+  };
+
+  const handleCensusSubmit = async (person: Person) => {
+    setCensusStatus('submitting');
+    try {
+      await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encode({
+          "form-name": "censo-asistencia",
+          "nombre": person.nombre,
+          "cedula": person.cedula,
+          "dependencia": person.dependencia,
+          "boton": person.boton,
+          "fecha_confirmacion": new Date().toLocaleString()
+        })
+      });
+      localStorage.setItem(`confirmed_${person.cedula}`, 'true');
+      setCensusStatus('success');
+    } catch (err) {
+      console.error(err);
+      setCensusStatus('error');
     }
   };
 
@@ -214,7 +250,7 @@ function App() {
                     id="cedula"
                     type="text"
                     placeholder="Ingrese su número de cédula"
-                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#003366] focus:ring-4 focus:ring-blue-50 transition-all h-14 mb-4"
+                    className="w-full px-4 py-3 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#003366] focus:ring-4 focus:ring-blue-50 transition-all h-14 mb-4 text-center md:text-left"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
@@ -249,6 +285,33 @@ function App() {
                         <span className="badge">Botón {result.boton} Años</span>
                       </p>
                     </div>
+                    <div className="result-footer p-3 md:p-4 border-t border-slate-100 bg-slate-50 rounded-b-xl">
+                      {censusStatus === 'success' ? (
+                        <div className="flex items-center justify-center text-green-600 font-bold py-2 bg-green-50 rounded-lg border border-green-200">
+                          <i className="fas fa-check-circle mr-2"></i> Asistencia Confirmada
+                        </div>
+                      ) : (
+                        <>
+                          <p className="text-[12px] text-gray-500 mb-3 text-center">
+                            Haga clic abajo para confirmar que asistirá al evento y recibir su botón.
+                          </p>
+                          <button
+                            onClick={() => handleCensusSubmit(result)}
+                            disabled={censusStatus === 'submitting'}
+                            className="w-full bg-[#cc9900] hover:bg-[#b38600] text-white font-bold py-3 rounded-lg transition-all flex justify-center items-center uppercase text-sm tracking-wide shadow-md"
+                          >
+                            {censusStatus === 'submitting' ? <div className="loader small"></div> : (
+                              <>
+                                <i className="fas fa-medal mr-2"></i> Confirmar Asistencia
+                              </>
+                            )}
+                          </button>
+                          {censusStatus === 'error' && (
+                            <p className="text-red-500 text-[10px] mt-2 text-center">Error al confirmar. Intente de nuevo.</p>
+                          )}
+                        </>
+                      )}
+                    </div>
                   </div>
                 )}
               </>
@@ -256,9 +319,9 @@ function App() {
               <div className="form-container">
                 <h1>Solicitud de Revisión</h1>
                 {formStatus === 'success' ? (
-                  <div className="bg-green-50 border border-green-200 text-green-800 p-8 rounded-lg text-center">
-                    <div className="text-4xl mb-4">✅</div>
-                    <h2 className="text-xl font-bold mb-2">¡Solicitud Enviada!</h2>
+                  <div className="bg-green-50 border border-green-200 text-green-800 p-6 md:p-8 rounded-lg text-center">
+                    <div className="text-3xl md:text-4xl mb-4">✅</div>
+                    <h2 className="text-lg md:text-xl font-bold mb-2">¡Solicitud Enviada!</h2>
                     <p>Su caso ha sido registrado en nuestra base de datos. Pronto nos comunicaremos con usted.</p>
                     <button onClick={() => setView('search')} className="search-btn mt-6 w-full">Volver al Inicio</button>
                   </div>

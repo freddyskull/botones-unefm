@@ -26,7 +26,7 @@ body {
 .top-bar {
   background-color: var(--unefm-blue);
   color: var(--white);
-  padding: 8px 12%;
+  padding: 8px 10%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -66,12 +66,12 @@ body {
 .header {
   background-color: var(--white);
   color: var(--unefm-blue);
-  padding: 20px 12%;
+  padding: 15px 10%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-  position: sticky;
+
   top: 0;
   z-index: 100;
 }
@@ -84,35 +84,18 @@ body {
 
 .logo-img {
   height: 60px;
-}
-
-.university-name-complex {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.university-name-complex span:first-child {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--unefm-blue);
-}
-
-.university-name-complex span:last-child {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--unefm-blue);
+  width: auto;
 }
 
 .nav-menu-simple {
   display: flex;
-  gap: 20px;
+  gap: 15px;
 }
 
 .nav-btn {
   background: transparent;
   border: none;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #666;
   cursor: pointer;
@@ -134,30 +117,15 @@ body {
   box-shadow: inset 0 0 0 1px rgba(0, 51, 102, 0.1);
 }
 
-.system-name-header {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--unefm-blue);
-  letter-spacing: 1px;
-  border-left: 3px solid var(--unefm-gold);
-  padding-left: 15px;
-  margin-left: 20px;
-}
-
-.logo-img {
-  height: 65px;
-  width: auto;
-}
-
 /* Main Content */
 .main-content {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 6rem 2rem;
-  background: linear-gradient(rgba(244, 247, 246, 0.85), rgba(244, 247, 246, 0.85)), 
-              url('https://images.unsplash.com/photo-1541339907198-e08756ebafe3?auto=format&fit=crop&q=80&w=2070') center/cover no-repeat;
+  padding: 4rem 1.5rem;
+  background: linear-gradient(rgba(244, 247, 246, 0.85), rgba(244, 247, 246, 0.85)),
+    url('https://images.unsplash.com/photo-1541339907198-e08756ebafe3?auto=format&fit=crop&q=80&w=2070') center/cover no-repeat;
 }
 
 .container {
@@ -165,29 +133,29 @@ body {
   width: 100%;
   max-width: 700px;
   border-radius: 12px;
-  padding: 3rem;
+  padding: 2.5rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   border-top: 5px solid var(--unefm-blue);
-  transition: max-width 0.3s ease;
 }
 
 h1 {
   color: var(--unefm-blue);
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin-bottom: 0.5rem;
   text-align: center;
+  font-weight: 800;
 }
 
 .subtitle {
   text-align: center;
   color: var(--text-light);
-  margin-bottom: 2.5rem;
-  font-size: 1rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
 }
 
 /* Search Box */
 .search-box {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 label {
@@ -195,7 +163,7 @@ label {
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: var(--unefm-blue);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 input {
@@ -214,38 +182,13 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.1);
 }
 
-.search-btn {
-  width: 100%;
-  background-color: var(--unefm-blue);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: 1rem;
-  transition: background-color 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.search-btn:hover {
-  background-color: var(--unefm-light-blue);
-}
-
-.search-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
 /* Result Card */
 .result-card {
   background-color: #f9f9f9;
   border-left: 4px solid var(--unefm-gold);
   border-radius: 8px;
   padding: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   animation: slideDown 0.4s ease-out;
 }
 
@@ -258,27 +201,28 @@ input:focus {
 .result-header h3 {
   margin: 0;
   color: var(--unefm-blue);
+  font-size: 1.1rem;
 }
 
 .result-body p {
   margin: 0.5rem 0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .label {
   font-weight: 700;
   color: var(--text-light);
-  width: 120px;
+  width: 110px;
   display: inline-block;
 }
 
 .badge {
   background-color: var(--unefm-gold);
   color: var(--unefm-blue);
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 20px;
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
 }
 
 .error-msg {
@@ -287,14 +231,21 @@ input:focus {
   padding: 1rem;
   border-radius: 8px;
   margin-top: 1rem;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   border: 1px solid #feb2b2;
   text-align: center;
 }
 
 @keyframes slideDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Loader */
@@ -309,12 +260,109 @@ input:focus {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader.small {
+  width: 16px;
+  height: 16px;
+  border-width: 2px;
 }
 
 footer {
   text-align: center;
   padding: 2rem;
   color: var(--text-light);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 992px) {
+
+  .top-bar,
+  .header {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    padding: 10px 5%;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .top-bar-info {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.6rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 5%;
+    text-align: center;
+  }
+
+  .logo-img {
+    height: 50px;
+    margin: 0 auto;
+  }
+
+  .nav-menu-simple {
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    flex: 1;
+  }
+
+  .main-content {
+    padding: 2rem 1rem;
+  }
+
+  .container {
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .label {
+    width: 100%;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .result-body p {
+    margin-bottom: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-menu-simple {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nav-btn {
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 51, 102, 0.03);
+  }
+
+  h1 {
+    font-size: 1.3rem;
+  }
 }
