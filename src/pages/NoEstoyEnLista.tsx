@@ -3,11 +3,35 @@ import { Link } from 'react-router-dom';
 
 export default function NoEstoyEnLista() {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success' | 'error' | 'duplicate'>('idle');
+  const [cedula, setCedula] = useState('');
 
   const API_URL = import.meta.env.VITE_API_URL || '';
 
+  const checkCedula = async (value: string) => {
+    if (!value || value.length < 5) return;
+    try {
+      const response = await fetch(`${API_URL}/api/solicitudes/${value}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.exists) {
+          setFormStatus('duplicate');
+        } else if (formStatus === 'duplicate') {
+          setFormStatus('idle');
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleCedulaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCedula(e.target.value);
+    if (formStatus === 'duplicate') setFormStatus('idle');
+  };
+
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (formStatus === 'duplicate') return;
     setFormStatus('submitting');
 
     const formData = new FormData(e.currentTarget);
@@ -63,7 +87,16 @@ export default function NoEstoyEnLista() {
 
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-1">Cédula</label>
-                <input type="text" name="cedula" required className="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#003366] transition-all h-12 bg-slate-200" placeholder="Ej: 12345678" />
+                <input 
+                  type="text" 
+                  name="cedula" 
+                  required 
+                  className="w-full px-3 py-2 border-2 border-slate-200 rounded-lg focus:outline-none focus:border-[#003366] transition-all h-12 bg-slate-200" 
+                  placeholder="Ej: 12345678" 
+                  value={cedula}
+                  onChange={handleCedulaChange}
+                  onBlur={() => checkCedula(cedula)}
+                />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -99,7 +132,7 @@ export default function NoEstoyEnLista() {
 
               <button
                 type="submit"
-                disabled={formStatus === 'submitting'}
+                disabled={formStatus === 'submitting' || formStatus === 'duplicate'}
                 className="w-full bg-[#003366] text-white font-bold py-4 rounded-lg mt-4 hover:bg-[#004a8f] transition-colors disabled:bg-slate-300 flex justify-center items-center uppercase tracking-wider"
               >
                 {formStatus === 'submitting' ? <div className="loader"></div> : 'Enviar Solicitud'}

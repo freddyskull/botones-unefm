@@ -13,14 +13,33 @@ export default function Home() {
   const API_URL = import.meta.env.VITE_API_URL || '';
 
   useEffect(() => {
-    if (result) {
-      const confirmed = localStorage.getItem(`confirmed_${result.cedula}`);
-      if (confirmed) {
-        setCensusStatus('success');
-      } else {
-        setCensusStatus('idle');
+    const checkConfirmation = async () => {
+      if (result) {
+        // First check local storage for instant feedback
+        const localConfirmed = localStorage.getItem(`confirmed_${result.cedula}`);
+        if (localConfirmed) {
+          setCensusStatus('success');
+        } else {
+          setCensusStatus('idle');
+        }
+
+        // Then verify with backend to be sure
+        try {
+          const response = await fetch(`${API_URL}/api/confirmaciones/${result.cedula}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.confirmed) {
+              localStorage.setItem(`confirmed_${result.cedula}`, 'true');
+              setCensusStatus('success');
+            }
+          }
+        } catch (err) {
+          console.error("Error checking confirmation status", err);
+        }
       }
-    }
+    };
+
+    checkConfirmation();
   }, [result]);
 
   const handleSearch = () => {

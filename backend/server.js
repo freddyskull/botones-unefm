@@ -232,6 +232,22 @@ app.get('/api/solicitudes', async (req, res) => {
   }
 });
 
+// ─── GET /api/solicitudes/:cedula ─────────────────────────────────────────────
+app.get('/api/solicitudes/:cedula', async (req, res) => {
+  const cedulaLimpia = cleanCedula(req.params.cedula);
+  try {
+    const result = await pool.query('SELECT id FROM solicitudes WHERE cedula = $1', [cedulaLimpia]);
+    if (result.rows.length > 0) {
+      res.json({ exists: true });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (err) {
+    console.error('Error al verificar solicitud:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 // ─── GET /api/confirmaciones ──────────────────────────────────────────────────
 app.get('/api/confirmaciones', async (req, res) => {
   try {
@@ -239,6 +255,22 @@ app.get('/api/confirmaciones', async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error('Error al obtener confirmaciones:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// ─── GET /api/confirmaciones/:cedula ──────────────────────────────────────────
+app.get('/api/confirmaciones/:cedula', async (req, res) => {
+  const cedulaLimpia = cleanCedula(req.params.cedula);
+  try {
+    const result = await pool.query('SELECT id FROM confirmaciones WHERE cedula = $1', [cedulaLimpia]);
+    if (result.rows.length > 0) {
+      res.json({ confirmed: true });
+    } else {
+      res.json({ confirmed: false });
+    }
+  } catch (err) {
+    console.error('Error al verificar confirmación:', err);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
