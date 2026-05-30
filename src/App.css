@@ -124,8 +124,7 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 4rem 1.5rem;
-  background: linear-gradient(rgba(244, 247, 246, 0.85), rgba(244, 247, 246, 0.85)),
-    url('https://images.unsplash.com/photo-1541339907198-e08756ebafe3?auto=format&fit=crop&q=80&w=2070') center/cover no-repeat;
+  background: #e7e7e7;
 }
 
 .container {
