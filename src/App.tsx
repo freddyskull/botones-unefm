@@ -6,7 +6,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import './App.css';
 
 // Variable de control para el modo mantenimiento
-const IS_MAINTENANCE = true;
+const IS_MAINTENANCE = false;
 
 function MaintenancePage() {
   return (
